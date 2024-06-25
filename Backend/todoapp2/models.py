@@ -1,19 +1,22 @@
 from django.db import models
-# from django.contrib.auth.models import User
-# from django.contrib.auth.models import AbstractUser,User
-# Create your models here.
-# class Todo(models.Model):
+from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser,User
 
-#     user=models.ForeignKey(User,on_delete=models.CASCADE)
+class Todo(models.Model):
 
-#     title=models.CharField(max_length=100)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
 
-#     description=models.TextField(null=True,blank=True)
+    title=models.CharField(max_length=100)
 
-#     date=models.DateTimeField(auto_now_add=True)
+    description=models.TextField(null=True,blank=True)
 
-#     status=models.BooleanField(default=False)
+    date=models.DateTimeField(auto_now_add=True)
 
+    status=models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return self.title
 
 
 
