@@ -4,19 +4,22 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import UserRegistrationSerializer,LoginSerializer
+from .serializers import UserRegistrationSerializer,LoginSerializer,TodoSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import  TokenAuthentication
 from django.contrib.auth import authenticate
+from rest_framework.permissions import IsAuthenticated,AllowAny
 
 
 
-# from .models import Todo
+
+
+from .models import Todo
 
 
 
 class RegisterView(APIView):
-        
+    permission_classes=[AllowAny]
     def post(self, request):
         
         serializer = UserRegistrationSerializer(data=request.data)
@@ -27,13 +30,12 @@ class RegisterView(APIView):
 
 
 
-class LoginAPIView(APIView):
-    serializer_class = LoginSerializer
-    authentication_classes = [TokenAuthentication]
+
 
 class LoginAPIView(APIView):
     serializer_class = LoginSerializer
     authentication_classes = [TokenAuthentication]
+    permission_classes=[AllowAny]
 
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
@@ -47,3 +49,20 @@ class LoginAPIView(APIView):
 
 
 
+class AddTodoAPIView(APIView):
+
+    permission_classes=[IsAuthenticated]
+
+    def post(self,request,format=None):
+
+        data = request.data
+        data['user'] = request.user.id
+        serializer = TodoSerializer(data=data)
+
+
+        if serializer.is_valid():
+
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)    
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

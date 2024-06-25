@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 import re
 
+from .models import Todo
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
 
@@ -40,3 +41,9 @@ class LoginSerializer(serializers.Serializer):
 
     username = serializers.CharField()
     password = serializers.CharField()
+
+
+class TodoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Todo
+        fields = ['id', 'title', 'description', 'status', 'user']
