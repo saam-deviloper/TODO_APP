@@ -3,12 +3,12 @@ import { Stack } from "expo-router";
 export default function MainLayout() {
   return (
     <Stack
-      initialRouteName="/(App)"
+      initialRouteName="mainPage"
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen name="(App)" />
+      <Stack.Screen name="mainPage" />
     </Stack>
   );
 }
