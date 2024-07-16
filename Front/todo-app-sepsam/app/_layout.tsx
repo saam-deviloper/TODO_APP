@@ -9,9 +9,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { useContext, useEffect } from "react";
 import "react-native-reanimated";
 
-import { useColorScheme } from "@/hooks/useColorScheme";
-import { Slot } from "expo-router";
 import { AuthContext, AuthProvider } from "@/contexts/AuthProvider";
+import { useColorScheme } from "@/hooks/useColorScheme";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -24,7 +23,9 @@ function RootLayoutContent() {
   });
   useEffect(() => {
     if (loaded) {
-      SplashScreen.hideAsync();
+      setTimeout(() => {
+        SplashScreen.hideAsync();
+      }, 2000);
     }
   }, [loaded]);
 
