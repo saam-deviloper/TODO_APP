@@ -1,18 +1,23 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  TextInput,
-} from "react-native";
-import React, { useContext, useState } from "react";
-import { Link, router } from "expo-router";
+import { ThemedText } from "@/components/ThemedText";
+import ThemedTextInput from "@/components/ThemedTextInput";
+import { ThemedView } from "@/components/ThemedView";
+import { Colors } from "@/constants/Colors";
 import { Dimens } from "@/constants/Dimens";
 import { AuthContext } from "@/contexts/AuthProvider";
+import { Link } from "expo-router";
+import React, { useContext, useState } from "react";
+import {
+  KeyboardAvoidingView,
+  Text,
+  TouchableOpacity,
+  useColorScheme,
+  View,
+} from "react-native";
 
 const Register = () => {
   // VARIABLES
-  const { signUp, session, isLoading } = useContext(AuthContext);
+  const { signUp } = useContext(AuthContext);
+  const theme = useColorScheme() ?? "light";
   const [userInfo, setUserInfo] = useState({
     username: "",
     password: "",
@@ -29,12 +34,23 @@ const Register = () => {
           alignItems: "center",
           height: Dimens.HEIGHT - 30,
           width: Dimens.WIDTH,
+          backgroundColor:
+            theme === "light"
+              ? Colors.light.background
+              : Colors.dark.background,
         }}
       >
-        <Text style={{ fontSize: 28, fontStyle: "italic", marginTop: 0 }}>
+        <ThemedText
+          style={{
+            fontSize: 28,
+            fontStyle: "italic",
+            marginTop: 0,
+            padding: 5,
+          }}
+        >
           Signup
-        </Text>
-        <View
+        </ThemedText>
+        <ThemedView
           style={{
             width: "80%",
             justifyContent: "space-around",
@@ -43,7 +59,7 @@ const Register = () => {
           }}
         >
           {/* <Text>username</Text> */}
-          <TextInput
+          <ThemedTextInput
             placeholder="username"
             style={{
               borderWidth: 1,
@@ -58,8 +74,8 @@ const Register = () => {
             }
           />
           {/* <Text>password</Text> */}
-          <TextInput
-            placeholder="password"
+          <ThemedTextInput
+            placeHolder="password"
             passwordRules={"*"}
             style={{
               borderWidth: 1,
@@ -85,7 +101,7 @@ const Register = () => {
             }}
             // disabled={isLoading}
           >
-            <Text
+            <ThemedText
               style={{
                 textAlign: "center",
                 marginVertical: "auto",
@@ -94,11 +110,11 @@ const Register = () => {
               }}
             >
               Signup
-            </Text>
+            </ThemedText>
           </TouchableOpacity>
-        </View>
+        </ThemedView>
         <View>
-          <Text>
+          <ThemedText>
             Already have an account?{" "}
             <Link href={{ pathname: "/" }}>
               <Text
@@ -106,13 +122,13 @@ const Register = () => {
                   fontWeight: "bold",
                   fontSize: 22,
                   fontStyle: "italic",
-                  color: "green",
+                  color: "dodgerblue",
                 }}
               >
                 Login
               </Text>
             </Link>
-          </Text>
+          </ThemedText>
         </View>
       </KeyboardAvoidingView>
     </>
