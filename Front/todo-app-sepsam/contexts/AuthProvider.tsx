@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 import { Alert } from "react-native";
 
 interface UserInfo {
@@ -18,17 +18,34 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // METHODS
   const signIn = (userInfo: UserInfo) => {
     setIsLoading(true);
+
     const userIsRegisterd = users.find(
-      (item: any) => item.username.toUpperCase() === userInfo.username.toUpperCase()
+      (item: any) =>
+        item.username.toUpperCase() === userInfo.username.toUpperCase()
     );
-    if(!userIsRegisterd) {Alert.alert('user not signup before');router.push('/register');return}
-    if (userIsRegisterd.password.toUpperCase() === userInfo.password.toUpperCase()) {
+    // if user not registerd before 
+    if (!userIsRegisterd) {
+      Alert.alert("username with this id not found,try to signup");
+      router.push("/register");
+      setIsLoading(false);
+      return;
+    }
+    // if username and password are OK
+    if (
+      userIsRegisterd.password.toUpperCase() === userInfo.password.toUpperCase()
+    ) {
       setTimeout(() => {
         setSession(userInfo);
         setIsLoading(false);
       }, 3000);
       router.push("(App)");
     }
+    // if password was incorrect 
+    if(userIsRegisterd.password.toUpperCase() !== userInfo.password.toUpperCase()) {
+      setIsLoading(false);
+      Alert.alert("username or password is incorrect");
+    }
+    else setIsLoading(false);
   };
 
   const signOut = () => {
@@ -43,7 +60,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
   const signUp = (userInfo: UserInfo) => {
     setUsers([...users, userInfo]);
-    Alert.alert('Signup completed')
+    Alert.alert("Signup completed");
     router.push("/");
   };
   return (
