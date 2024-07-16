@@ -1,25 +1,26 @@
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-} from "react-native";
-import React, { useEffect, useState } from "react";
+import { ThemedText } from "@/components/ThemedText";
+import ThemedTextInput from "@/components/ThemedTextInput";
+import { ThemedView } from "@/components/ThemedView";
+import { Colors } from "@/constants/Colors";
 import { Dimens } from "@/constants/Dimens";
-import { Link } from "expo-router";
-import { useContext } from 'react';
 import { AuthContext } from "@/contexts/AuthProvider";
+import { Link } from "expo-router";
+import React, { useContext, useState } from "react";
+import {
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  useColorScheme,
+  View,
+} from "react-native";
 
 const login = () => {
   //  VARIABLES
+  const theme = useColorScheme() ?? "light";
   const [userInfo, setUserInfo] = useState({
     username: "",
     password: "",
   });
-  const {signIn,session,isLoading} =  useContext(AuthContext);
-  useEffect(()=>{console.log(session,'effect')},[session])
+  const { signIn, isLoading } = useContext(AuthContext);
   return (
     <>
       <KeyboardAvoidingView
@@ -31,12 +32,16 @@ const login = () => {
           alignItems: "center",
           height: Dimens.HEIGHT - 30,
           width: Dimens.WIDTH,
+          backgroundColor:
+            theme === "light"
+              ? Colors.light.background
+              : Colors.dark.background,
         }}
       >
-        <Text style={{ fontSize: 28, fontStyle: "italic", marginTop: 0 }}>
+        <ThemedText style={{ fontSize: 28, fontStyle: "italic", padding: 5 }}>
           Login
-        </Text>
-        <View
+        </ThemedText>
+        <ThemedView
           style={{
             width: "80%",
             justifyContent: "space-around",
@@ -45,8 +50,8 @@ const login = () => {
           }}
         >
           {/* <Text>username</Text> */}
-          <TextInput
-            placeholder="username"
+          <ThemedTextInput
+            placeHolder="username"
             style={{
               borderWidth: 1,
               borderColor: "grey",
@@ -60,8 +65,8 @@ const login = () => {
             }
           />
           {/* <Text>password</Text> */}
-          <TextInput
-            placeholder="password"
+          <ThemedTextInput
+            placeHolder="password"
             passwordRules={"*"}
             style={{
               borderWidth: 1,
@@ -82,10 +87,10 @@ const login = () => {
               height: 50,
               borderRadius: 5,
             }}
-            onPress={()=>signIn(userInfo)}
-            // disabled={isLoading}
+            onPress={() => signIn(userInfo)}
+            disabled={isLoading}
           >
-            <Text
+            <ThemedText
               style={{
                 textAlign: "center",
                 marginVertical: "auto",
@@ -94,14 +99,14 @@ const login = () => {
               }}
             >
               Login
-            </Text>
+            </ThemedText>
           </TouchableOpacity>
-        </View>
+        </ThemedView>
         <View>
-          <Text>
+          <ThemedText>
             Dont have an account?{" "}
             <Link href={{ pathname: "register" }}>
-              <Text
+              <ThemedText
                 style={{
                   fontWeight: "bold",
                   fontSize: 22,
@@ -110,9 +115,9 @@ const login = () => {
                 }}
               >
                 Register
-              </Text>
+              </ThemedText>
             </Link>
-          </Text>
+          </ThemedText>
         </View>
       </KeyboardAvoidingView>
     </>
@@ -120,5 +125,3 @@ const login = () => {
 };
 
 export default login;
-
-
