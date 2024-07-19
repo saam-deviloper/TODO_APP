@@ -40,8 +40,15 @@ INSTALLED_APPS = [
     'rest_framework', #
     'todoapp2',#
     'rest_framework.authtoken',#
+    'drf_yasg',#
 ]
-
+SWAGGER_SETTINGS = { #
+    'SECURITY_DEFINITIONS': {
+        'Basic': {
+            'type': 'basic'
+        }
+    }
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
