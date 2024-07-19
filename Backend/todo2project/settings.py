@@ -77,19 +77,29 @@ WSGI_APPLICATION = 'todo2project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+
+
+
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'tododb',
+#         'USER': 'root',
+#         'PASSWORD': 'admin',
+#         'HOST': '127.0.0.1',  # Set to empty string for localhost.
+#         'PORT': '3306',       # Set to empty string for default.
+    
+# }
+# }
 DATABASES = {
-
-
-
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tododb',
-        'USER': 'root',
-        'PASSWORD': 'admin',
-        'HOST': '127.0.0.1',  # Set to empty string for localhost.
-        'PORT': '3306',       # Set to empty string for default.
-    
-}
+        'NAME': 'inspiring_raman',       
+        'USER': 'root',        
+        'PASSWORD': 'DES2zWzM0lhqS13qdO0rR8AR', 
+        'HOST': 'elbrus.liara.cloud',        
+        'PORT': '33341',            
+    }
 }
 
 CORS_ORIGIN_WHITELIST = [ #

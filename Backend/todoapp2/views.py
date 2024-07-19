@@ -58,7 +58,7 @@ class AddTodoAPIView(APIView):
         data = request.data
         data['user'] = request.user.id
         serializer = TodoSerializer(data=data)
-
+        # print(serializer)
 
         if serializer.is_valid():
 
@@ -108,4 +108,12 @@ class UpdateTodoAPIView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
                     
-    
+class TodoListAPIView(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        # Filter todos by the requesting user
+        todos = Todo.objects.filter(user=request.user)
+        serializer = TodoSerializer(todos, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
